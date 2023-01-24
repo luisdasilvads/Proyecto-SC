@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Arr;
+use Carbon\Carbon;
 use App\Models\Beneficiario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -42,6 +44,8 @@ class BeneficiarioController extends Controller
     {
         try {
         $data = $request->except('_token') ;
+        $creadoal = Carbon::now()->toDateString();
+        $data = Arr::add($data, 'created_at', $creadoal);
         Beneficiario::insert($data);
         Session::flash('message', 'Beneficiario creado exitosamente!');
         return redirect('beneficiario');

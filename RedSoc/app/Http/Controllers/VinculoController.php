@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+
+use Illuminate\Support\Arr;
+use Carbon\Carbon;
 use App\Models\Vinculo;
 use App\Models\Beneficiario;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class VinculoController extends Controller
 {
@@ -15,11 +19,12 @@ class VinculoController extends Controller
      */
     public function index()
     {
-        
-        $datos['vinculos']=Vinculo::paginate(100);
-        $beneficiario=Beneficiario::where('id',$datos->beneficiarios)->get();
-        $oferente=Beneficiario::where('id',$datos->oferente)->get();
-        return view('vinculo.index',$datos,$beneficiario,$oferente);
+        $vinculos['vinculos']=Vinculo::paginate(100);
+        //$beneficiario=Beneficiario::where('id',$datos->beneficiarios)->get();
+        //$oferente=Beneficiario::where('id',$datos->oferente)->get();
+        //return view('vinculo.index',$datos,$beneficiario,$oferente);
+        $beneficiarios['beneficiarios']=Beneficiario::all('nombre','id');
+        return view('vinculo.index',$vinculos,$beneficiarios);
     }
 
     /**
@@ -29,8 +34,11 @@ class VinculoController extends Controller
      */
     public function create()
     {
-        $beneficiarios['beneficiarios']=Beneficiario::all('nombre');
-        return view('vinculo.create',$beneficiarios);
+        $beneficiarios['beneficiarios']=Beneficiario::all('nombre','id');
+        $oferentes['oferentes']=Beneficiario::all('nombre','id');
+        //$beneficiario=Beneficiario::where('id',$datos->beneficiarios)->get();
+        //$oferente=Beneficiario::where('id',$datos->oferente)->get();
+        return view('vinculo.create',$beneficiarios,$oferentes);
     }
 
     /**
@@ -42,6 +50,18 @@ class VinculoController extends Controller
     public function store(Request $request)
     {
         //
+        try {
+            $data = $request->except('_token') ;
+            $creadoal = Carbon::now()->toDateString();
+            $data = Arr::add($data, 'created_at', $creadoal);
+            Vinculo::insert($data);
+            Session::flash('message', 'Vínculo creado exitosamente!');
+            return redirect('vinculo');
+    
+            } catch (Exception $ex) {
+                Session::flash('error', 'Error al agregar Vínculo');
+                return view('layouts.dashboard');
+            }
     }
 
     /**
@@ -61,9 +81,17 @@ class VinculoController extends Controller
      * @param  \App\Models\Vinculo  $vinculo
      * @return \Illuminate\Http\Response
      */
-    public function edit(Vinculo $vinculo)
+    public function edit($id)
     {
-        //
+        try {
+            $vinculo=Vinculo::findOrFail($id);
+            $beneficiarios['beneficiarios']=Beneficiario::all('nombre','id');
+        return view('vinculo.edit',compact('vinculo'),$beneficiarios);
+        
+        } catch ( Eception $ex) {
+            Session::flash('error', 'Error al actualizar el vínculo');
+            return view('layouts.dashboard');
+        }
     }
 
     /**
@@ -73,9 +101,31 @@ class VinculoController extends Controller
      * @param  \App\Models\Vinculo  $vinculo
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Vinculo $vinculo)
+    public function update(Request $request, $id)
     {
-        //
+        // aqui se envia el formulario para actualizar
+        try {
+            $data = $request->except(['_token','_method']) ;
+            Vinculo::where('id','=',$id)->update($data);
+            Session::flash('message', 'Vínculo Editado exitosamente!');
+            return redirect('vinculo');      
+        } catch (Exception $ex) {
+            Session::flash('error', 'Error al actualizar el Víinculo');
+            return view('layouts.dashboard');
+        }
+
+    }
+
+
+    public function view_delete_vinculo($id)
+    {
+        try {
+            $beneficiario=Beneficiario::findOrFail($id);
+            return view('beneficiario.delete',compact('beneficiario')); 
+        } catch (Exception $ex) {
+            Session::flash('error', 'Error al eliminar el beneficiario');
+            return view('beneficiario');
+        }
     }
 
     /**

@@ -30,40 +30,46 @@
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Nombre Organización</th>
-                            <th>Tipo de Organización</th>
-                            <th>Sector</th>
-                            <th>Nombre Contacto</th>
-                            <th>Telf. Oficina</th>
-                            <th>Telf. Celular</th>
-                            <th>Email</th>
+                            <th>Beneficiario</th>
+                            <th>Oferente</th>
+                            <th>Forma Comunicación</th>
+                            <th>Lugar</th>
+                            <th>Nombre y Apellido Contacto</th>
+                            <th>Descripcion</th>
+                            <th>Fecha</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
                 
-                
                     <tbody>
-                        @foreach ($beneficiarios as $beneficiario)
-                        <tr>
-                            <td>{{$beneficiario->id }}</td>
-                            <td>{{$beneficiario->nombre}}</td>
-                            <td>{{$beneficiario->tipo_org}}</td>
-                            <td>{{$beneficiario->sector}}</td>
-                            <td>{{$beneficiario->nombre_cont}} </td>
-                            <td>{{$beneficiario->telf_c_cont}}</td>
-                            <td>{{$beneficiario->telf_l_cont}}</td>
-                            <td>{{$beneficiario->email}}</td>
+                        @foreach ($vinculos as $vinculo)
+                        <tr>    
+                            <td>{{$vinculo->id}}</td>
+                            @foreach ($beneficiarios as $beneficiario)
+                            @if(($vinculo->beneficiarios) == ($beneficiario->id) )
+                            <td>{{ $beneficiario->nombre}}</td>
+                            @endif
+                            @endforeach
+                            @foreach ($beneficiarios as $beneficiario)
+                            @if(($vinculo->oferente) == ($beneficiario->id) )
+                            <td>{{ $beneficiario->nombre}}</td>
+                            @endif
+                            @endforeach
+                            <td>{{$vinculo->forma_comunacion}}</td>
+                            <td>{{$vinculo->lugar}}</td>
+                            <td>{{$vinculo->nombre_apellido_contacto}}</td>
+                            <td>{{$vinculo->descripcion}} </td>
+                            <td>{{$vinculo->fecha}}</td>
                             <td> 
-                                <a href="{{ url('beneficiario/'.$beneficiario->id.'/edit') }}"><i class="mdi mdi-18px mdi-account-edit"></i></a>
+                                <a href="{{ url('vinculo/'.$vinculo->id.'/edit') }}"><i class="mdi mdi-18px mdi-account-edit"></i></a>
                                 <span style="color: white" >___</span>  
-                                <a href="{{ url('beneficiario/'.$beneficiario->id.'/delete')}}"><i class=" mdi mdi-18px mdi-account-minus"></i></a>
+                                <a href="{{ url('vinculo/'.$vinculo->id.'/delete')}}"><i class=" mdi mdi-18px mdi-account-minus"></i></a>
                             </td>
                         </tr>    
                         @endforeach
-                        @if(count($beneficiarios) == 0)
+                        @if(count($vinculos) == 0)
                         <tr>
                             <td>No hay beneficiarios registrados aún</td>
-                            <td></td>
                             <td></td>
                             <td></td>
                             <td></td>

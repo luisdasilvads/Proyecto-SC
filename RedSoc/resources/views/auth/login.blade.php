@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <title>Login Vínculos</title>
+        <title>Login Vínculos RedSoc</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
         <meta content="Coderthemes" name="author" />
@@ -24,7 +24,7 @@
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-md-8 col-lg-6 col-xl-5">
-                        <div class="card bg-pattern">
+                        <div class="card">
 
                             <div class="card-body p-4">
                                 
@@ -65,7 +65,7 @@
                                     </div>
 
                                     <div class="form-group mb-0 text-center">
-                                        <button class="btn btn-primary btn-block" type="submit"> Ingresar </button>
+                                        <button class="btn btn-primary btn-info btn-block" type="submit"> Ingresar </button>
                                     </div>
 
                                 </form>
