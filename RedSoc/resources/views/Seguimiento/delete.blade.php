@@ -1,16 +1,16 @@
 @extends('layouts.dashboard')
 
 @section('title')
-<title>Eliminar Beneficiario</title>
+<title>Eliminar Seguimiento</title>
 @endsection
 
 @section('page-title')
-    <h4 class="page-title">Beneficiarios</h4>
+    <h4 class="page-title">Seguimientos</h4>
 @endsection
 
 @section('breadcrumb')
-    <li class="breadcrumb-item"><a href="{{url('beneficiario')}}">Lista de Beneficiarios</a></li>
-    <li class="breadcrumb-item active">Eliminar Beneficiarios</li>
+    <li class="breadcrumb-item"><a href="{{url('beneficiario')}}">Lista de Seguimientos</a></li>
+    <li class="breadcrumb-item active">Eliminar Seguimientos</li>
 @endsection
 
 @section('content')

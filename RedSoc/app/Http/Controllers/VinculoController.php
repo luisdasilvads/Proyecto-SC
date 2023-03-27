@@ -19,7 +19,8 @@ class VinculoController extends Controller
      */
     public function index()
     {
-        $vinculos['vinculos']=Vinculo::paginate(100);
+        //$vinculos['vinculos']=Vinculo::paginate(100);
+        $vinculos['vinculos']=Vinculo::all();
         //$beneficiario=Beneficiario::where('id',$datos->beneficiarios)->get();
         //$oferente=Beneficiario::where('id',$datos->oferente)->get();
         //return view('vinculo.index',$datos,$beneficiario,$oferente);
@@ -120,11 +121,12 @@ class VinculoController extends Controller
     public function view_delete_vinculo($id)
     {
         try {
-            $beneficiario=Beneficiario::findOrFail($id);
-            return view('beneficiario.delete',compact('beneficiario')); 
+            $vinculo=Vinculo::findOrFail($id);
+            $beneficiarios=Beneficiario::all('nombre','id');
+            return view('vinculo.delete',compact('beneficiarios','vinculo')); 
         } catch (Exception $ex) {
-            Session::flash('error', 'Error al eliminar el beneficiario');
-            return view('beneficiario');
+            Session::flash('error', 'Error al eliminar el Vinculo');
+            return view('vinculo');
         }
     }
 
@@ -134,8 +136,17 @@ class VinculoController extends Controller
      * @param  \App\Models\Vinculo  $vinculo
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Vinculo $vinculo)
+    public function destroy(Request $request, $id)
     {
-        //
+       try {
+            $data = $request->except(['_token','_method']) ;
+            $vinculo=Vinculo::findOrFail($id);
+            Vinculo::where('id','=',$id)->delete($data);
+            Session::flash('message', 'Vínculo eliminado exitosamente!');
+            return redirect('vinculo');     
+        } catch (Exception $ex) {
+            Session::flash('error', 'Error al eliminar el Vínculo');
+            return view('vinculo');
+       }
     }
 }

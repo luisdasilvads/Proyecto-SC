@@ -19,7 +19,8 @@ class BeneficiarioController extends Controller
      */
     public function index()
     {
-        $datos['beneficiarios']=Beneficiario::paginate(100);
+        //$datos['beneficiarios']=Beneficiario::paginate(100);
+        $datos['beneficiarios']=Beneficiario::all();
         return view('Beneficiario.index',$datos);
     }
 

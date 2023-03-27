@@ -122,6 +122,21 @@
                                 </li>
                             </ul>
                         </li>
+                        <li>
+                            <a href="javascript: void(0);">
+                                <i class="mdi mdi-feature-search"></i>
+                                <span class="menu-arrow"></span>
+                                <span> Seguimientos </span>
+                            </a>
+                            <ul class="nav-second-level" aria-expanded="false">
+                                <li>
+                                    <a class="mdi mdi-playlist-check" href=" {{url('seguimiento')}} "> Listar</a>
+                                </li>
+                                <li>
+                                    <a class="mdi mdi-playlist-plus" href="{{url('seguimiento/create')}}"> Agregar</a>
+                                </li>
+                            </ul>
+                        </li>
                     </ul>
                 </div>
                 <!-- End Sidebar -->

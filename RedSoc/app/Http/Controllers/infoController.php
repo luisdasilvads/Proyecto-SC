@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Vinculo;
 use App\Models\Beneficiario;
 use Illuminate\Http\Request;
@@ -17,11 +18,27 @@ class infoController extends Controller
     public function index()
     {
         //$vinculos['vinculos']=Vinculo::paginate(100);
+        //$from30days = Carbon::now()->subMonths(1)->toDateString();
+        //$articles = Beneficiario::where("created_at",">", Carbon::now()->subMonths(1))->count();
+        //$last30tvinculos = Vinculo::whereDateBetween('created_at',(new Carbon)->subDays(30)->startOfDay()->toDateString(),(new Carbon)->now()->endOfDay()->toDateString())->get();
+        //$last30tbeneficiarios = Beneficiario::whereDateBetween('created_at',(new Carbon)->subDays(30)->startOfDay()->toDateString(),(new Carbon)->now()->endOfDay()->toDateString() )->get();
+        $from30days = (new Carbon)->subDays(30)->startOfDay()->toDateString();
+        $from180days = (new Carbon)->subDays(180)->startOfDay()->toDateString();
+        $from365days = (new Carbon)->subDays(365)->startOfDay()->toDateString();
+        $toNow = (new Carbon)->now()->endOfDay()->toDateString();
+        //vinculos
         $tvinculos = Vinculo::count();
+        $tvinculosl30days = Vinculo::whereBetween('created_at', [$from30days, $toNow])->count();
+        $tvinculosl180days = Vinculo::whereBetween('created_at', [$from180days, $toNow])->count();
+        $tvinculosl365days = Vinculo::whereBetween('created_at', [$from365days, $toNow])->count();
+        //Beneficiarios
         $tbeneficiarios = Beneficiario::count();
-        //$wordCount = $wordlist->count();
-        //dd('prueba',$tvinculos,' + ',$tbeneficiarios);
-        return view('home.info',compact('tvinculos','tbeneficiarios'));
+        $tbeneficiariosl30days = Beneficiario::whereBetween('created_at', [$from30days, $toNow])->count();
+        $tbeneficiariosl180days = Beneficiario::whereBetween('created_at', [$from180days, $toNow])->count();
+        $tbeneficiariosl365days = Beneficiario::whereBetween('created_at', [$from365days, $toNow])->count();
+
+        
+        return view('home.info',compact('tvinculos','tvinculosl30days','tvinculosl180days','tvinculosl365days','tbeneficiarios','tbeneficiariosl30days','tbeneficiariosl180days','tbeneficiariosl365days'));
     }
 
     /**

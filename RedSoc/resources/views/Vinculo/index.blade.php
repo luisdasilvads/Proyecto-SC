@@ -20,7 +20,7 @@
 
                 <h4 class="header-title">Lista De Vínculos</h4>
                 <p class="text-muted font-13 mb-4">
-                    A continuación se despliega una lista con todos los beneficiarios agregados a la base de datos.
+                    A continuación se despliega una lista con todos los Vínculos agregados a la base de datos.
                 </p>
 
                 <table id="datatable-buttons" class="table table-striped dt-responsive nowrap">
@@ -30,13 +30,13 @@
                     <thead>
                         <tr>
                             <th>ID</th>
+                            <th>Fecha</th>
                             <th>Beneficiario</th>
                             <th>Oferente</th>
                             <th>Forma Comunicación</th>
                             <th>Lugar</th>
                             <th>Nombre y Apellido Contacto</th>
                             <th>Descripcion</th>
-                            <th>Fecha</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
@@ -45,6 +45,7 @@
                         @foreach ($vinculos as $vinculo)
                         <tr>    
                             <td>{{$vinculo->id}}</td>
+                            <td>{{$vinculo->fecha}}</td>
                             @foreach ($beneficiarios as $beneficiario)
                             @if(($vinculo->beneficiarios) == ($beneficiario->id) )
                             <td>{{ $beneficiario->nombre}}</td>
@@ -59,7 +60,6 @@
                             <td>{{$vinculo->lugar}}</td>
                             <td>{{$vinculo->nombre_apellido_contacto}}</td>
                             <td>{{$vinculo->descripcion}} </td>
-                            <td>{{$vinculo->fecha}}</td>
                             <td> 
                                 <a href="{{ url('vinculo/'.$vinculo->id.'/edit') }}"><i class="mdi mdi-18px mdi-account-edit"></i></a>
                                 <span style="color: white" >___</span>  

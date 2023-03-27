@@ -24,8 +24,8 @@ return new class extends Migration
             $table->string('fecha');
             $table->timestamps();
             
-            $table->foreign('beneficiarios')->references('id')->on('beneficiarios');
-            $table->foreign('oferente')->references('id')->on('beneficiarios');
+            $table->foreign('beneficiarios')->references('id')->on('beneficiarios')->onDelete("cascade");
+            $table->foreign('oferente')->references('id')->on('beneficiarios')->onDelete("cascade");
         });
     }
 

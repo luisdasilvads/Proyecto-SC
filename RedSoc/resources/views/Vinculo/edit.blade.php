@@ -55,9 +55,10 @@
                             <label for="forma_comunacion" class="col-form-label">Forma Comunicación</label>
                             <select name="forma_comunacion" id="sector" class="form-control" required>
                                 <option value="{{$vinculo->forma_comunacion}}">{{$vinculo->forma_comunacion}}</option>
-                                <option value="Local">Local</option>
-                                <option value="Nacional">Nacional</option>
-                                <option value="Internacional">Internacional</option>
+                                <option value="Telefonica">Telefonica</option>
+                                <option value="Correo">Correo</option>
+                                <option value="WhatsApp">WhatsApp</option>
+                                <option value="Otra">Otra</option>
                             </select>
                         </div>
                         <div class="form-group col-md-2">
